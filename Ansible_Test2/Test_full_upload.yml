@@ -1,0 +1,44 @@
+- name: Setup base config on Splunk servers
+  hosts: '{{ servers | default(''splunk-staging'') }}'
+  roles:
+    - role: common
+      tags:
+        - common
+        - common-base
+    - role: splunk-kernel
+      tags:
+        - splunk-kernel
+        - common-base
+    - role: splunk-ca
+      tags:
+        - splunk-ca
+        - common-base
+    - role: splunk-base
+      tags:
+        - splunk-base
+        - common-base
+- name: Setup config on Splunk License Master
+  hosts: '{{ lm_servers | default(''splunk-staging-lm'') }}'
+  roles:
+    - role: splunk-license-master
+      tags: splunk-license-master
+- name: Setup config on Splunk Deployment Server
+  hosts: '{{ ds_servers | default(''splunk-staging-ds'') }}'
+  roles:
+    - role: splunk-deployment-server
+      tags: splunk-deployment-server
+- name: Setup config on Splunk Cluster Master
+  hosts: '{{ cm_servers | default(''splunk-staging-cm'') }}'
+  roles:
+    - role: splunk-cluster-master
+      tags: splunk-cluster-master
+- name: Setup config on Splunk Search Heads
+  hosts: '{{ search_servers | default(''splunk-staging-search'') }}'
+  roles:
+    - role: splunk-search-heads
+      tags: splunk-search-heads
+- name: Setup config on Splunk Peer Nodes
+  hosts: '{{ idx_servers | default(''splunk-staging-idx'') }}'
+  roles:
+    - role: splunk-peer-nodes
+      tags: splunk-peer-nodes
