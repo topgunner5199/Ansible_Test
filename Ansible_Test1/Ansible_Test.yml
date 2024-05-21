@@ -1,0 +1,5 @@
+name: Setup config on Splunk Peer Nodes
+hosts: '{{ idx_servers | default(''splunk-staging-idx'') }}'
+roles:
+  - role: splunk-peer-nodes
+    tags: splunk-peer-nodes
